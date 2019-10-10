@@ -20,8 +20,11 @@ class Pizza(models.Model):
     def __str__(self):
         return self.nazwa
 
+    class Meta:
+        verbose_name_plural = "pizze"
+
 class Skladnik(models.Model):
-    pizze =  models.ManyToManyField(Pizza, related_name='skladniki')
+    pizze =  models.ManyToManyField(Pizza, related_name='skladniki', null=True, blank=True)
     nazwa = models.CharField('składnik', max_length=30)
     jarski = models.BooleanField('jarski?', help_text='Zaznacz, jeżeli składnik jest odpowiedni dla wegetarian', default=False)
     cena = models.DecimalField(max_digits=3, decimal_places=2, default=0)
@@ -29,3 +32,5 @@ class Skladnik(models.Model):
     def __str__(self):
         return self.nazwa
 
+    class Meta:
+        verbose_name_plural = "skladniki"

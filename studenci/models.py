@@ -5,6 +5,12 @@ class Uczelnia(models.Model):
         verbose_name='uczelnia',
         max_length=30)
 
+    def __str__(self):
+        return self.nazwa
+
+    class Meta:
+        verbose_name_plural = "uczelnie"
+
 class Miasto(models.Model):
     nazwa = models.CharField(
         verbose_name='miasto',
@@ -13,6 +19,12 @@ class Miasto(models.Model):
         max_length=30,
         help_text="Wpisz kod pocztowy")
 
+    def __str__(self):
+        return self.nazwa
+
+    class Meta:
+        verbose_name_plural = "miasta"
+
 class Student(models.Model):
     nazwisko = models.CharField(max_length=30)
     imie = models.CharField(max_length=30)
@@ -20,3 +32,9 @@ class Student(models.Model):
     miasto = models.ForeignKey(Miasto, on_delete=models.SET_NULL, null = True)
     dochod = models.DecimalField(max_digits=6, decimal_places=2, default=0)
     roks = models.CharField(max_length=3, blank=True, default=0)
+
+    def __str__(self):
+        return self.imie + " " + self.nazwisko
+
+    class Meta:
+        verbose_name_plural = "studenci"
