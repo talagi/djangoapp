@@ -34,7 +34,7 @@ class Student(models.Model):
     roks = models.CharField(max_length=3, blank=True, default=0)
 
     def __str__(self):
-        return self.imie + " " + self.nazwisko
+        return self.imie + " " + self.nazwisko;
 
     class Meta:
         verbose_name_plural = "studenci"
