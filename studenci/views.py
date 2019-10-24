@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from studenci.models import Miasto, Uczelnia
+from django.contrib import messages
 
 
 
@@ -12,8 +13,13 @@ def miasta(request):
     if request.method == 'POST':
         nazwa = request.POST.get('nazwa', '')
         kod = request.POST.get('kod', '')
-        m = Miasto(nazwa=nazwa, kod=kod)
-        m.save()
+        if len(nazwa.strip()) and len(kod.strip()):
+            m = Miasto(nazwa=nazwa, kod=kod)
+            m.save()
+            messages.success(request, "Dobrze!!!")
+        else:
+            messages.error(request, "Błąd danych!!!")
+
 
     miasta = Miasto.objects.all()
     kontekst = {'miasta': miasta}
@@ -22,8 +28,12 @@ def miasta(request):
 def uczelnie(request):
     if request.method == 'POST':
         nazwa = request.POST.get('nazwa', '')
-        n = Uczelnia(nazwa=nazwa, )
-        n.save()
+        if len(nazwa.strip()):
+            n = Uczelnia(nazwa=nazwa, )
+            n.save()
+            messages.success(request, "Dobrze!!!")
+        else:
+            messages.error(request, "Błąd danych!!!")
 
     uczelnie = Uczelnia.objects.all()
     kontekst = {'uczelnie': uczelnie}
