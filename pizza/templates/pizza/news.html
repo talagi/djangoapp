@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <title>News</title>
-</head>
-<body>
+{% extends 'szablon.html' %}
+{% block tytul %}Pizza{% endblock tytul %}
 
-<h1> Witaj w barze Pizza!</h1>
-<p>Nowości:</p>
-
-</body>
-</html>
+{% block naglowek %}Nowości!{% endblock naglowek %}
+{% block tresc %}
+<p>Nowe pizze</p>
+{% endblock tresc %}
