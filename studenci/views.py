@@ -55,8 +55,12 @@ def uczelnie(request):
         'form': form,
         'uczelnie': uczelnie
     }
+    if request.user.has_perm('studenci.add_uczelnia'):
+        return render(request, 'studenci/uczelnie.html', kontekst)
+    else:
+        messages.info(request, "Nie możesz dodawać uczelni!")
+        return redirect(reverse('studenci:index'))
 
-    return render(request, 'studenci/uczelnie.html', kontekst)
 
 
 def login(request):
