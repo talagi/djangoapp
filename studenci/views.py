@@ -4,7 +4,14 @@ from django.contrib import messages
 from django.urls import reverse
 
 from studenci.models import Miasto, Uczelnia
-from studenci.forms import StudentLoginForm, UczelniaForm, MiastoForm
+from studenci.forms import StudentLoginForm, UczelniaForm, MiastoForm, MiastoModelForm
+
+from django.views.generic import ListView, DeleteView
+from django.views.generic.edit import CreateView, UpdateView
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+from django.urls import reverse_lazy
+from django.contrib.messages.views import SuccessMessageMixin
 
 def index(request):
     # return HttpResponse("Witaj w aplikacji Studenci!")
@@ -71,3 +78,41 @@ def login(request):
 
     kontekst = { 'form': form }
     return render(request, 'studenci/login.html', kontekst)
+
+class ListaUczelni(ListView):
+    model = Uczelnia
+    context_object_name = 'uczelnie'
+    template_name = 'studenci/lista_uczelni.html'
+
+@method_decorator(login_required, name='dispatch')
+class DodajMiasto(CreateView):
+    model = Miasto
+    fields = ('nazwa', 'kod')
+    template_name = 'studenci/miasto_dodaj.html'
+    success_url = reverse_lazy('studenci:miasta_lista')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['miasta'] = Miasto.objects.all()
+        return context
+
+    def form_valid(self, form):
+        messages.success(self.request, "Dodano miasto!")
+        return super().form_valid(form)
+
+@method_decorator(login_required, name='dispatch')
+class EdytujMiasto(SuccessMessageMixin, UpdateView):
+    model = Miasto
+    form_class = MiastoModelForm
+    template_name = 'studenci/miasto_dodaj.html'
+    success_url = reverse_lazy('studenci:miasta_lista')
+    success_message = 'Zaktualizowano miasto!'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['miasta'] = Miasto.objects.all()
+        return context
+
+class UsunMiasto(DeleteView):
+    model = Miasto
+    success_url = reverse_lazy('studenci:miasta_lista')

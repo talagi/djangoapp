@@ -19,29 +19,31 @@
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button">Pizza</a>
                 <div class="dropdown-menu">
                     <a href="{% url 'pizza:index' %}" class="dropdown-item">Strona główna</a>
-                    <a href="{% url 'pizza:news' %}" class="dropdown-item">Nowości</a>
+                    <a href="{% url 'pizza:skladnik_add' %}" class="dropdown-item">Składniki</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button">Studenci</a>
                 <div class="dropdown-menu">
-                    <a href="{% url 'studenci:miasta' %}" class="dropdown-item">Miasta</a>
-                    <a href="{% url 'studenci:uczelnie' %}" class="dropdown-item">Uczelnie</a>
+                    <a href="{% url 'studenci:index' %}" class="dropdown-item">Strona główna</a>
+                    <a href="{% url 'studenci:miasta_lista' %}" class="dropdown-item">Lista Miast</a>
+                    <a href="{% url 'studenci:miasta_dodaj' %}" class="dropdown-item">Utwórz miasto</a>
+                    <a href="{% url 'studenci:miasta' %}" class="dropdown-item">Dodaj miasto</a>
+                    <a href="{% url 'studenci:uczelnie_lista' %}" class="dropdown-item">Lista Uczelni</a>
+                    <a href="{% url 'studenci:uczelnie' %}" class="dropdown-item">Dodaj uczelnie</a>
                 </div>
             </li>
-            <li class="nav-item">
-                <a href="{% url 'studenci:miasta' %}" class="nav-link">Miasta</a>
-            </li>
-                <li class="nav-item dropdown">
+            <li class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button">Użytkownicy</a>
                 <div class="dropdown-menu">
                     <a href="{% url 'users:index' %}" class="dropdown-item">Strona główna</a>
-                    {%  if not user.is_authenticated %}
+                    {% if not user.is_authenticated %}
                         <a href="{% url 'users:rejestruj' %}" class="dropdown-item">Rejestracja</a>
                         <a href="{% url 'users:loguj' %}" class="dropdown-item">Logowanie</a>
                     {% else %}
                         <a href="{% url 'users:wyloguj' %}" class="dropdown-item">Wyloguj</a>
                     {% endif %}
+
                 </div>
             </li>
             </ul>
